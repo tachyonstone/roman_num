@@ -8,6 +8,7 @@ int pattern_change(int *branch)
   char branch_ch[BUFSIZE];
   int lim;
   int branch2;
+
   do{
 	printf("\n1~3までの数字を入力し、表示パターンを選択してください。\n");
 	printf("pattern > ");
@@ -15,18 +16,22 @@ int pattern_change(int *branch)
 	if(strlen(branch_ch)>=BUFSIZE-1){
 	  while(getchar() != '\n');
 	}
-	if(strcmp(branch_ch,"exit\n")==0 || strcmp(branch_ch,"\"exit\"\n")==0){
-	  return -1;
-	}
-	if(strcmp(branch_ch,"change\n")==0 || strcmp(branch_ch,"\"change\"\n")==0){
-	  lim = pattern_change(&branch2);
-	}
+
+	  if(strcmp(branch_ch,"exit\n")==0 || strcmp(branch_ch,"\"exit\"\n")==0){
+		return -1;
+	  }
+	  if(strcmp(branch_ch,"change\n")==0 || strcmp(branch_ch,"\"change\"\n")==0){
+		lim = pattern_change(&branch2);
+		break;
+	  }
 
 	*branch = atoi(branch_ch);
+
 	if(*branch>3 || *branch<1 || strlen(branch_ch)!=2){
 	  printf("不適切な文字が入力されました。\n\n");
 	  *branch = -1;
 	}
+
 
 	if(*branch==1){
 	  lim = 40000;
@@ -128,11 +133,11 @@ int arabicnum_to_romannum3(int figure)
 {
   int i;
   int n = 10000;
-  char *r_num1[20] = {"I","X","C","M","T"};
+  char *r_num3[20] = {"I","X","C","M","T"};
 
   for(i=4; i>=0; i--){
 	while(figure>=n){
-	  printf("%s", r_num1[i]);
+	  printf("%s", r_num3[i]);
 	  figure = figure - n;
 	}
 	n /= 10;
