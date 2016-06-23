@@ -8,7 +8,6 @@ int pattern_change(int *branch)
   char branch_ch[BUFSIZE];
   int lim;
   int branch2;
-
   do{
 	printf("\n1~3までの数字を入力し、表示パターンを選択してください。\n");
 	printf("pattern > ");
@@ -128,10 +127,10 @@ int arabicnum_to_romannum2(int figure)
 int arabicnum_to_romannum3(int figure)
 {
   int i;
-  int n = 1000;
-  char *r_num1[20] = {"I","X","C","M"};
+  int n = 10000;
+  char *r_num1[20] = {"I","X","C","M","T"};
 
-  for(i=3; i>=0; i--){
+  for(i=4; i>=0; i--){
 	while(figure>=n){
 	  printf("%s", r_num1[i]);
 	  figure = figure - n;
