@@ -5,12 +5,9 @@
 
 int pattern_change(int *branch)
 {
-  int figure;
-  char figure_buf[BUFSIZE];
   char branch_ch[BUFSIZE];
-  int flag=0;
   int lim;
-  int branch1;
+  int branch2;
 
   do{
 	printf("\n1~3までの数字を入力し、表示パターンを選択してください。\n");
@@ -23,12 +20,13 @@ int pattern_change(int *branch)
 	  return -1;
 	}
 	if(strcmp(branch_ch,"change\n")==0 || strcmp(branch_ch,"\"change\"\n")==0){
-	  lim = pattern_change(&branch1);
+	  lim = pattern_change(&branch2);
 	}
 
 	*branch = atoi(branch_ch);
 	if(*branch>3 || *branch<1 || strlen(branch_ch)!=2){
 	  printf("不適切な文字が入力されました。\n\n");
+	  *branch = -1;
 	}
 
 	if(*branch==1){
@@ -49,58 +47,28 @@ int pattern_change(int *branch)
 int arabicnum_to_romannum1(int figure)
 {
   int i;
+  int n = 10000;
   char *r_num1[20] = {"I","V","X","L","C","D","M","F","T"};
   char *r_num2[20] = {"IV","IX","XL","XC","CD","CM","MF","MT"};
 
-  while(figure>=10000){
-	printf("%s", r_num1[8]);
-	figure = figure-10000;
-  }
-  if(9000<=figure && figure<10000){
-	printf("%s", r_num2[7]);
-	figure = figure-9000;
-  }
-  if(figure>=5000){
-	printf("%s", r_num1[7]);
-	figure = figure-5000;
-  }
-  if(4000<=figure && figure<5000){
-	printf("%s", r_num2[6]);
-	figure = figure-4000;
-  }
-
-  while(figure>=1000){
-	printf("%s", r_num1[6]);
-	figure = figure-1000;
-  }
-  if(900<=figure && figure<1000){
-	printf("%s", r_num2[5]);
-	figure = figure-900;
-  }
-  if(500<=figure && figure<900){
-	printf("%s", r_num1[5]);
-	figure = figure-500;
-  }
-  if(400<=figure && figure<500){
-	printf("%s", r_num2[4]);
-	figure = figure-400;
-  }
-
-  while(figure>=100){
-	printf("%s", r_num1[4]);
-	figure = figure-100;
-  }
-  if(90<=figure && figure<100){
-	printf("%s", r_num2[3]);
-	figure = figure-90;
-  }
-  if(50<=figure && figure<90){
-	printf("%s", r_num1[3]);
-	figure = figure-50;
-  }
-  if(40<=figure && figure<50){
-	printf("%s", r_num2[2]);
-	figure = figure-40;
+  for(i=8; i > 2; i=i-2){
+	while(figure>=n){
+	  printf("%s", r_num1[i]);
+	  figure = figure-n;
+	}
+	if((n-n/10)<=figure && figure<n){
+	  printf("%s", r_num2[i-1]);
+	  figure = figure-(n-n/10);
+	}
+	if(figure>=n/2){
+	  printf("%s", r_num1[i-1]);
+	  figure = figure-n/2;
+	}
+	if((n/2-n/10)<=figure && figure<n/2){
+	  printf("%s", r_num2[i-2]);
+	  figure = figure-(n/2-n/10);
+	}
+	n /= 10;
   }
 
   while(figure>=10){
@@ -132,42 +100,19 @@ int arabicnum_to_romannum1(int figure)
 int arabicnum_to_romannum2(int figure)
 {
   int i;
+  int n = 10000;
   char *r_num1[20] = {"I","V","X","L","C","D","M","F","T"};
 
-  while(figure>=10000){
-	printf("%s", r_num1[8]);
-	figure = figure-10000;
-  }
-  if(5000<=figure && figure<10000){
-	printf("%s", r_num1[7]);
-	figure = figure-5000;
-  }
-
-  while(figure>=1000){
-	printf("%s", r_num1[6]);
-	figure = figure-1000;
-  }
-  if(500<=figure && figure<1000){
-	printf("%s", r_num1[5]);
-	figure = figure-500;
-  }
-
-  while(figure>=100){
-	printf("%s", r_num1[4]);
-	figure = figure-100;
-  }
-  if(50<=figure && figure<100){
-	printf("%s", r_num1[3]);
-	figure = figure-50;
-  }
-
-  while(figure>=10){
-	printf("%s", r_num1[2]);
-	figure = figure-10;
-  }
-  if(5<=figure && figure<10){
-	printf("%s", r_num1[1]);
-	figure = figure-5;
+  for(i=8; i>=1; i=i-2){
+	while(figure>=n){
+	  printf("%s", r_num1[i]);
+	  figure = figure-n;
+	}
+	if(n/2<=figure && figure<n){
+	  printf("%s", r_num1[i-1]);
+	  figure = figure-n/2;
+	}
+	n /= 10;
   }
 
   while(figure>=1){
@@ -183,23 +128,15 @@ int arabicnum_to_romannum2(int figure)
 int arabicnum_to_romannum3(int figure)
 {
   int i;
-  char *r_num1[20] = {"I","V","X","L","C","D","M","F","T"};
+  int n = 1000;
+  char *r_num1[20] = {"I","X","C","M"};
 
-  while(figure>=1000){
-	printf("%s", r_num1[6]);
-	figure = figure - 1000;
-  }
-  while(figure>=100){
-	printf("%s", r_num1[4]);
-	figure = figure -100;
-  }
-  while(figure>=10){
-	printf("%s", r_num1[2]);
-	figure = figure -10;
-  }
-  while(figure>=1){
-	printf("%s", r_num1[0]);
-	figure = figure -1;
+  for(i=3; i>=0; i--){
+	while(figure>=n){
+	  printf("%s", r_num1[i]);
+	  figure = figure - n;
+	}
+	n /= 10;
   }
 
   return 0;
@@ -209,10 +146,8 @@ int arabicnum_to_romannum3(int figure)
 int input_error(char *figure_buf, int lim)
 {
   int figure;
-  int i=0,n;
-  char branch_ch[BUFSIZE];
-  int branch;
-  int flag=0;
+  int i=0;
+  int n;
 
   n = strlen(figure_buf);
 
@@ -313,7 +248,5 @@ int main(void)
 	}
 
   }
-
-  return 0;
 
 }
