@@ -14,16 +14,16 @@ int pattern_change(int *branch)
 	printf("pattern > ");
 	fgets(branch_ch, BUFSIZE, stdin);
 	if(strlen(branch_ch)>=BUFSIZE-1){
-	  while(getchar() != '\n');
+	  while(getchar() != '\n');  //バッファに残った文字を取り除く
 	}
 
-	  if(strcmp(branch_ch,"exit\n")==0 || strcmp(branch_ch,"\"exit\"\n")==0){
-		return -1;
-	  }
-	  if(strcmp(branch_ch,"change\n")==0 || strcmp(branch_ch,"\"change\"\n")==0){
-		lim = pattern_change(&branch2);
-		break;
-	  }
+	if(strcmp(branch_ch,"exit\n")==0 || strcmp(branch_ch,"\"exit\"\n")==0){
+	  return -1;
+	}
+	if(strcmp(branch_ch,"change\n")==0 || strcmp(branch_ch,"\"change\"\n")==0){
+	  lim = pattern_change(&branch2);
+	  break;
+	}
 
 	*branch = atoi(branch_ch);
 
@@ -32,13 +32,12 @@ int pattern_change(int *branch)
 	  *branch = -1;
 	}
 
-
 	if(*branch==1){
-	  lim = 40000;
+	  lim = 40000;  //表示パターン1の最大値用
 	}else if(*branch==2){
-	  lim = 50000;
-	}else{
-	  lim = 100000;
+	  lim = 50000;  //表示パターン2の最大値用
+	}else if(*branch==3){
+	  lim = 100000; //表示パターン3の最大値用
 	}
 
   }while(*branch>3 || *branch<1);
@@ -84,7 +83,7 @@ int arabicnum_to_romannum1(int figure)
 	figure = figure-5;
   }
   if(figure == 9){
- 	printf("%s\n", r_num2[1]);
+	printf("%s\n", r_num2[1]);
 	return 0;
   }else if(figure == 4){
 	printf("%s\n", r_num2[0]);
@@ -147,6 +146,7 @@ int arabicnum_to_romannum3(int figure)
 
 }
 
+
 int input_error(char *figure_buf, int lim)
 {
   int figure;
@@ -158,7 +158,8 @@ int input_error(char *figure_buf, int lim)
   while(i<n-1){
 	figure = figure_buf[i]-'0';
 	if(figure < 0 || figure > 9){
-	  printf("不適切な文字が入力されました。\n\n1~%dまでのアラビア数字を入力してください。\n", lim-1);
+	  printf("不適切な文字が入力されました。\n\n");
+	  printf("1~%dまでのアラビア数字を入力してください。\n", lim-1);
 	  printf("arrabic_number > ");
 	  return 0;
 	}
@@ -168,7 +169,8 @@ int input_error(char *figure_buf, int lim)
   figure = atoi(figure_buf);
 
   if(figure<=0 || figure >=lim){
-	printf("不適切な文字が入力されました。\n\n1~%dまでのアラビア数字を入力してください。\n", lim-1);
+	printf("不適切な文字が入力されました。\n\n");
+	printf("1~%dまでのアラビア数字を入力してください。\n", lim-1);
 	printf("arrabic_number > ");
   }
 
@@ -186,27 +188,27 @@ int main(void)
   int lim;
 
   printf("**********************************************************\n");
-  printf("=   <使い方>                                             =\n");
-  printf("=(1) 表示パターンの選択                                  =\n");
-  printf("=  表示パターンを1~3の中から選んでください。             =\n");
-  printf("=  例えば、\"958\"と入力したとすると、                     =\n");
-  printf("=  表示パターン1 -> CMLVIII                              =\n");
-  printf("=  表示パターン2 -> DCCCCLVIII                           =\n");
-  printf("=  表示パターン3 -> CCCCCCCCCXXXXXIIIIIIII               =\n");
-  printf("=(2) ローマ数字への変換                                  =\n");
-  printf("=  最大で99999までの半角のアラビア数字で整数を入力すると =\n");
-  printf("=  ローマ数字に変換して表示されます。                    =\n");
-  printf("=(3) コマンド操作                                        =\n");
-  printf("=  \"change\"と入力すると表示パターンの切り替えができます。=\n");
-  printf("=  \"exit\"と入力すると処理を終了します。                  =\n");
+  printf("= <使い方> =\n");
+  printf("=(1) 表示パターンの選択 =\n");
+  printf("= 表示パターンを1~3の中から選んでください。 =\n");
+  printf("= 例えば、\"958\"と入力したとすると、 =\n");
+  printf("= 表示パターン1 -> CMLVIII =\n");
+  printf("= 表示パターン2 -> DCCCCLVIII =\n");
+  printf("= 表示パターン3 -> CCCCCCCCCXXXXXIIIIIIII =\n");
+  printf("=(2) ローマ数字への変換 =\n");
+  printf("= 最大で99999までの半角のアラビア数字で整数を入力すると =\n");
+  printf("= ローマ数字に変換して表示されます。 =\n");
+  printf("=(3) コマンド操作 =\n");
+  printf("= \"change\"と入力すると表示パターンの切り替えができます。=\n");
+  printf("= \"exit\"と入力すると処理を終了します。 =\n");
   printf("**********************************************************\n");
 
   lim = pattern_change(&branch);
-  if(lim == -1){
+  if(lim == -1){  //exit
 	return 0;
   }
 
-  while(1){
+  while(1){  //label : flag==1のときここに戻る
 	printf("\n1~%dまでのアラビア数字を入力してください。\n", lim-1);
 	printf("arrabic_number > ");
 	do{
@@ -219,15 +221,15 @@ int main(void)
 	  }
 	  if(strcmp(figure_buf,"change\n")==0 || strcmp(figure_buf,"\"change\"\n")==0){
 		lim = pattern_change(&branch);
-		if(lim == -1){
+		if(lim == -1){  //exit
 		  return 0;
 		}
-		flag = 1;
+		flag = 1;  //labelに戻る
 		break;
 	  }
 
 	  figure = input_error(figure_buf, lim);
-	  if(figure == -1){
+	  if(figure == -1){  //exit
 		return 0;
 	  }
 
@@ -235,22 +237,21 @@ int main(void)
 
 	if(flag == 0){
 	  if(branch==1){
-		printf("roman_number   > ");
+		printf("roman_number > ");
 		arabicnum_to_romannum1(figure);
 		printf("\n");
 	  }else if(branch==2){
-		printf("roman_number   > ");
+		printf("roman_number > ");
 		arabicnum_to_romannum2(figure);
 		printf("\n");
 	  }else if(branch==3){
-		printf("roman_number   > ");
+		printf("roman_number > ");
 		arabicnum_to_romannum3(figure);
 		printf("\n");
 	  }
-	}else{
+	}else{  //labelに戻る
 	  flag = 0;
 	}
-
   }
 
 }
