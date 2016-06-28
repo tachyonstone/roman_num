@@ -22,6 +22,7 @@ int pattern_change(int *branch)
 	}
 	if(strcmp(branch_ch,"change\n")==0 || strcmp(branch_ch,"\"change\"\n")==0){
 	  lim = pattern_change(&branch2);
+	  *branch = branch2;
 	  break;
 	}
 
@@ -234,7 +235,6 @@ int main(void)
 	  }
 
 	}while(figure<=0 || figure >=lim);
-
 	if(flag == 0){
 	  if(branch==1){
 		printf("roman_number > ");
