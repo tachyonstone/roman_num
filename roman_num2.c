@@ -7,9 +7,10 @@ int pattern_change(int *branch)
 {
   char branch_ch[BUFSIZE];
   int lim;
-  int branch2;
+  int flag;
 
   do{
+	flag = 0;
 	printf("\n1~3までの数字を入力し、表示パターンを選択してください。\n");
 	printf("pattern > ");
 	fgets(branch_ch, BUFSIZE, stdin);
@@ -21,24 +22,25 @@ int pattern_change(int *branch)
 	  return -1;
 	}
 	if(strcmp(branch_ch,"change\n")==0 || strcmp(branch_ch,"\"change\"\n")==0){
-	  lim = pattern_change(&branch2);
-	  *branch = branch2;
-	  break;
-	}
-
-	*branch = atoi(branch_ch);
-
-	if(*branch>3 || *branch<1 || strlen(branch_ch)!=2){
-	  printf("不適切な文字が入力されました。\n\n");
 	  *branch = -1;
+	  flag = -1;
 	}
 
-	if(*branch==1){
-	  lim = 40000;  //表示パターン1の最大値用
-	}else if(*branch==2){
-	  lim = 50000;  //表示パターン2の最大値用
-	}else if(*branch==3){
-	  lim = 100000; //表示パターン3の最大値用
+	if(flag == 0){
+	  *branch = atoi(branch_ch);
+
+	  if(*branch>3 || *branch<1 || strlen(branch_ch)!=2){
+		printf("不適切な文字が入力されました。\n\n");
+		*branch = -1;
+	  }
+
+	  if(*branch==1){
+		lim = 40000;  //表示パターン1の最大値用
+	  }else if(*branch==2){
+		lim = 50000;  //表示パターン2の最大値用
+	  }else if(*branch==3){
+		lim = 100000; //表示パターン3の最大値用
+	  }
 	}
 
   }while(*branch>3 || *branch<1);
@@ -148,7 +150,7 @@ int arabicnum_to_romannum3(int figure)
 }
 
 
-int input_error(char *figure_buf, int lim)
+int check_error(char *figure_buf, int lim)
 {
   int figure;
   int i=0;
@@ -229,10 +231,7 @@ int main(void)
 		break;
 	  }
 
-	  figure = input_error(figure_buf, lim);
-	  if(figure == -1){  //exit
-		return 0;
-	  }
+	  figure = check_error(figure_buf, lim);
 
 	}while(figure<=0 || figure >=lim);
 	if(flag == 0){
