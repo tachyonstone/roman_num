@@ -237,15 +237,15 @@ int main(void)
 	}while(figure<=0 || figure >=lim);
 	if(flag == 0){
 	  if(branch==1){
-		printf("Roman_numerals > ");
+		printf("Roman_numerals  > ");
 		arabicnum_to_romannum1(figure);
 		printf("\n");
 	  }else if(branch==2){
-		printf("Roman_numerals > ");
+		printf("Roman_numerals  > ");
 		arabicnum_to_romannum2(figure);
 		printf("\n");
 	  }else if(branch==3){
-		printf("Roman_numerals > ");
+		printf("Roman_numerals  > ");
 		arabicnum_to_romannum3(figure);
 		printf("\n");
 	  }
