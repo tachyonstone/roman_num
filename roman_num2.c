@@ -7,10 +7,9 @@ int pattern_change(int *branch)
 {
   char branch_ch[BUFSIZE];
   int lim;
-  int flag;
+  int flag=0;
 
-  do{
-	flag = 0;
+  do{  //label : flag==1のときここに戻る
 	printf("\n1~3までの数字を入力し、表示パターンを選択してください。\n");
 	printf("pattern > ");
 	fgets(branch_ch, BUFSIZE, stdin);
@@ -23,7 +22,7 @@ int pattern_change(int *branch)
 	}
 	if(strcmp(branch_ch,"change\n")==0 || strcmp(branch_ch,"\"change\"\n")==0){
 	  *branch = -1;
-	  flag = -1;
+	  flag = 1;  //labelに戻る
 	}
 
 	if(flag == 0){
@@ -41,6 +40,8 @@ int pattern_change(int *branch)
 	  }else if(*branch==3){
 		lim = 100000; //表示パターン3の最大値用
 	  }
+	}else{  //labelに戻る
+	  flag = 0;
 	}
 
   }while(*branch>3 || *branch<1);
